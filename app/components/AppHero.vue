@@ -83,3 +83,19 @@
     onBeforeUnmount(stopRotation)
 </script>
 
+<style scoped>
+    .word-fade-enter-active,
+    .word-fade-leave-active {
+        transition: opacity 250ms ease, transform 250ms ease;
+    }
+
+    .word-fade-enter-from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    .word-fade-leave-to {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+</style>
