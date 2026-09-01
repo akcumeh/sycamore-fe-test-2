@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-    --color-navy-950: #0f111d;
-    --color-navy-900: #14172a;
-    --color-navy-800: #1c2033;
+    --color-navy-950: #14172a;
+    --color-navy-900: #1f2334;
+    --color-navy-800: #283049;
     --color-slate-300: #cbd5e1;
-    --color-mint-300: #a7f5b3;
-    --color-mint-400: #7fe08a;
+    --color-mint-300: #b2eda1;
+    --color-mint-400: #44c486;
+
+    --font-sans: 'DM Sans', sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', sans-serif;
 }
 
 :root {
-    /* color-scheme: dark; */
+    color-scheme: dark;
 }
