@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+    --color-navy-950: #0f111d;
+    --color-navy-900: #14172a;
+    --color-navy-800: #1c2033;
+    --color-slate-300: #cbd5e1;
+    --color-mint-300: #a7f5b3;
+    --color-mint-400: #7fe08a;
+}
+
+:root {
+    /* color-scheme: dark; */
+}
