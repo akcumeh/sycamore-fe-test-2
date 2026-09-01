@@ -1,5 +1,5 @@
 <template>
-    <header class="border-b border-navy-800/60">
+    <header class="absolute inset-x-0 top-0 z-50 bg-transparent border-navy-800/60">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
             <a href="#" class="flex items-center gap-2 shrink-0" aria-label="Staco home">
                 <span class="h-7 w-7 rounded-full bg-mint-400"
@@ -13,16 +13,15 @@
                     <ul class="relative flex items-center gap-1 whitespace-nowrap">
                         <li v-for="(item, index) in navItems" :key="item.id">
                             <a
-                            :ref="el => setTabRef(el as HTMLElement, index)"
-                            :href="item.href"
-                            class="relative z-10 inline-block rounded-full px-4 py-2 text-sm font-medium text-slate-300
+                               :ref="el => setTabRef(el as HTMLElement, index)"
+                               :href="item.href"
+                               class="relative z-10 inline-block rounded-full px-4 py-2 text-sm font-medium text-slate-300
                             transition-colors duration-200 focus-visible:outline focus-visible:outline-2
                             focus-visible:outline-offset-2 focus-visible:outline-mint-400"
-                            :class="{ 'text-navy-900': index === activeIndex }"
-                            :aria-current="index === activeIndex ? 'page' : undefined"
-                            @click="handleClick(index, $event)"
-                            >
-                            {{ item.label }}
+                               :class="{ 'text-navy-900': index === activeIndex }"
+                               :aria-current="index === activeIndex ? 'page' : undefined"
+                               @click="handleClick(index, $event)">
+                                {{ item.label }}
                             </a>
                         </li>
                     </ul>
@@ -74,6 +73,11 @@
         event.preventDefault()
         activeIndex.value = index
         moveIndicator(index)
+        tabRefs.value[index]?.scrollIntoView({
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+            inline: 'center',
+            block: 'nearest',
+        })
     }
 
     onMounted(() => {
