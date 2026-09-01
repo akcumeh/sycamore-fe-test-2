@@ -2,7 +2,7 @@
     <header class="border-b border-navy-800/60">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
             <a href="#" class="flex items-center gap-2 shrink-0" aria-label="Staco home">
-                <span class="h-7 w-7 rounded-full bg-gradient-to-br from-mint-300 to-mint-400"
+                <span class="h-7 w-7 rounded-full bg-mint-400"
                       aria-hidden="true"></span>
                 <span class="text-lg font-semibold text-white">Staco</span>
             </a>
@@ -26,6 +26,9 @@
                             </a>
                         </li>
                     </ul>
+                    <span ref="indicatorRef"
+                          class="pointer-events-none absolute inset-y-1 left-0 rounded-full bg-mint-400 transition-[transform,width] duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]"
+                          aria-hidden="true"></span>
                 </div>
             </nav>
 
@@ -40,24 +43,44 @@
 </template>
 
 <script setup lang="ts">
-const navItems = [
-    { id: 'home', label: 'Home', href: '#home' },
-    { id: 'pages', label: 'Pages', href: '#pages' },
-    { id: 'services', label: 'Services', href: '#services' },
-    { id: 'blogs', label: 'Blogs', href: '#blogs' },
-    { id: 'contact', label: 'Contact Us', href: '#contact' },
-]
+    const navItems = [
+        { id: 'home', label: 'Home', href: '#home' },
+        { id: 'pages', label: 'Pages', href: '#pages' },
+        { id: 'services', label: 'Services', href: '#services' },
+        { id: 'blogs', label: 'Blogs', href: '#blogs' },
+        { id: 'contact', label: 'Contact Us', href: '#contact' },
+    ]
 
-const activeIndex = ref(0)
-const trackRef = ref<HTMLElement | null>(null)
-const tabRefs = ref<(HTMLElement | null)[]>([])
+    const activeIndex = ref(0)
+    const trackRef = ref<HTMLElement | null>(null)
+    const tabRefs = ref<(HTMLElement | null)[]>([])
 
-function setTabRef(el: HTMLElement | null, index: number) {
-    tabRefs.value[index] = el
-}
+    function setTabRef(el: HTMLElement | null, index: number) {
+        tabRefs.value[index] = el
+    }
 
-function handleClick(index: number, event: Event) {
-    event.preventDefault()
-    activeIndex.value = index
-}
+    const indicatorRef = ref<HTMLElement | null>(null)
+    let resizeObserver: ResizeObserver | null = null
+
+    function moveIndicator(index: number) {
+        const target = tabRefs.value[index]
+        const indicator = indicatorRef.value
+        if (!target || !indicator) return
+        indicator.style.width = `${target.offsetWidth}px`
+        indicator.style.transform = `translateX(${target.offsetLeft}px)`
+    }
+
+    function handleClick(index: number, event: Event) {
+        event.preventDefault()
+        activeIndex.value = index
+        moveIndicator(index)
+    }
+
+    onMounted(() => {
+        moveIndicator(activeIndex.value)
+        resizeObserver = new ResizeObserver(() => moveIndicator(activeIndex.value))
+        if (trackRef.value) resizeObserver.observe(trackRef.value)
+    })
+
+    onBeforeUnmount(() => resizeObserver?.disconnect())
 </script>

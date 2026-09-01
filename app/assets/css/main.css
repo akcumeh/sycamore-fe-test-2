@@ -12,6 +12,12 @@
     --font-jakarta: 'Plus Jakarta Sans', sans-serif;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .navbar-indicator-motion {
+        transition: none !important;
+    }
+}
+
 :root {
     color-scheme: dark;
 }
